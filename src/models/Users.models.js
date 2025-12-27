@@ -5,7 +5,7 @@ import jwt from "jsonwebtoken"
 const userSchema = new mongoose.Schema({
     watchHistory:[{
         type:mongoose.Schema.Types.ObjectId,
-        ref:Videos
+        ref:"Videos"
     }],
     userName:{
         type:String,
