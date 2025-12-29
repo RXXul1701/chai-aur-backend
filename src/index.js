@@ -1,5 +1,4 @@
-import dotenv from 'dotenv'
-dotenv.config()
+import "./config/env.js"
 import connectionDB from './db/index_db.js'
 import express from 'express'
 import app from "./app.js"

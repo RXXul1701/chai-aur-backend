@@ -40,24 +40,22 @@ const userSchema = new mongoose.Schema({
     },
     refreshToken:{
         type:String,
-        required:true
     }
 
 },{timestamps:true})
 
 //Hash the pswd before saving to db
-userSchema.pre("save", async function(next){
-    if (!this.isModified("password")) return next()
+userSchema.pre("save", async function(){
+    if (!this.isModified("password")) return
     this.password = await bcrypt.hash(this.password, 10)
-    next()
 })
 //compare the pswd
-userSchema.methods.isPasswordCorredt = async function(password){
+userSchema.methods.isPasswordCorrect = async function(password){
     return await bcrypt.compare(password, this.password)
 }
 
 //Generate jwt access token
-userSchema.methods.generateAccessToken = ()=>{
+userSchema.methods.generateAccessToken = function(){
     return jwt.sign(
         {
             _id: this._id,
@@ -72,7 +70,7 @@ userSchema.methods.generateAccessToken = ()=>{
     )
 }
 //Generate refresh token
-userSchema.methods.generateRefreshToken = ()=>{
+userSchema.methods.generateRefreshToken = function(){
     return jwt.sign(
         {
             _id: this._id
